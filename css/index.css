@@ -1,0 +1,309 @@
+/*basic*/
+*{
+	margin:0;
+	padding:0;
+	list-style: none;
+	box-sizing: border-box;
+	font-size: 15px;
+}
+body{
+	background-image: url(../img/bg.png);
+	color: #333;
+}
+.container{
+	width: 100%;
+	position: relative;
+	box-shadow: inset 0 0 4px rgba(0,0,0,0.2);
+}
+.main{
+	width:100%;
+	text-align: center;
+	padding:30px 50px 50px 50px;
+	display: block;
+}
+
+/*controler*/
+label{
+	position: relative;
+	display: inline-block;
+	width: 70px;
+	height: 35px;
+	line-height: 35px;
+	margin-right:10px;
+	background:rgba(0,0,0,0.1);
+	border-radius: 5%;
+	box-shadow: inset 0 0 4px rgba(0,0,0,0.2);
+	cursor: pointer;
+}
+input{
+	position:absolute;
+	opacity: 0;
+}
+input:checked + label {
+	background:rgba(0,0,0,0.8);
+	color: #eee;
+}
+
+/*change part*/
+.graph-container{
+	position: relative;
+	background-image: -webkit-linear-gradient(left , rgba(255, 255, 255, .5) 100%, transparent 100%);
+	display: inline-block;
+	padding: 0px;
+	margin:40px 0 0 40px;
+}
+/*底边*/
+.graph-container:before{
+	content: "";
+	position: absolute;
+	width: 100%;
+	height: 2.5em;
+	bottom: 0em;
+	left: -1.25em;
+	background: rgba(183, 183, 183, 1);
+	transform:skew(-45deg);
+}
+/*侧边*/
+.graph-container:after{
+	content: "";
+	position: absolute;
+	width: 2.5em;
+	bottom: 1.25em;
+	left: -2.5em;
+	background: rgba(183, 183, 183, .5);
+	transform:skew(0deg,-45deg);
+	transition: all 0.8s ease-in, bottom 0.8s ease-out;
+}
+.graph-container > li{
+	float:left;
+	position: relative;
+	text-align: center;
+}
+.bar-wrapper{
+	overflow: hidden;
+}
+
+
+/*bar part*/
+.graph-container > li > span{
+	position: absolute;
+	bottom: -2em;
+	left: 2.5em;
+	font-size: 1.5em;
+}
+.bar-container{
+	height: 10em;
+	width: 10em;
+	position: relative;
+	margin:2.5em 3.5em 0 0;
+	transition: all 0.8s ease-in, bottom 0.8s ease-out;
+}
+/* right bottom patch - make sure inner bar's right bottom corner is "cut" when it slides down */
+/*这个伪元素的作用是遮挡住方块下落的时候右下角的部分，使其不会有穿帮的感觉*/
+/*利用给伪元素加boder,然后选取合适的颜色*/
+.bar-container:before{
+	content: '';
+	position: absolute;
+	bottom: 0;
+	right: -2.5em;
+	width: 0;
+	height: 0;
+	z-index: 3;
+	border-style: solid;
+	border-width:0 0 2.5em 2.5em;
+	border-color: transparent transparent rgba(183,183,183,1);
+}
+.graph-container >li:first-child{
+	margin-left: 1em;
+}
+.graph-container >li:nth-child(5){
+	margin-right: 3em;
+}
+/*back down left*/
+.bar-background:before,
+.bar-background:after,
+.bar-inner:before,
+.bar-inner:after,
+.bar-foreground:before,
+.bar-foreground:after{
+	content: '';
+	position: absolute;
+}
+.bar-background{
+	position: absolute;
+	width: 10em;
+	height: 100%;
+	top: -2.5em;
+	right:-2.5em;
+	background: rgba(0,0,0,0.14);
+}
+.bar-background:before{
+	width: 100%;
+	height: 2.5em;
+	bottom:-2.5em;
+	left: -1.25em;
+	background: rgba(0,0,0,0.18);
+	transform:skew(-45deg);
+}
+.bar-background:after{
+	width: 2.5em;
+	height: 100%;
+	bottom:-1.25em;
+	left: -2.5em;
+	background: rgba(0,0,0,0.22);
+	transform:skew(0deg,-45deg);
+}
+
+/*fore top right*/
+.bar-foreground{
+	position: absolute;
+	width: 10em;
+	height: 100%;
+	background: rgba(0,0,0,0.12);
+}
+.bar-foreground:before,
+.bar-inner:before{
+	width: 100%;
+	height: 2.5em;
+	top:-2.5em;
+	right: -1.25em;
+	background: rgba(0,0,0,0.16);
+	transform:skew(-45deg);
+	transition: all 0.8s ease-in, bottom 0.8s ease-out;
+}
+.bar-foreground:after,
+.bar-inner:after{
+	width: 2.5em;
+	height: 100%;
+	top:-1.25em;
+	right: -2.5em;
+	background: rgba(0,0,0,0.20);
+	transform:skew(0deg,-45deg);
+	transition: all 0.8s ease-in, bottom 0.8s ease-out;
+}
+
+.bar-inner{
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+	transition: all 0.8s ease-in, bottom 0.8s ease-out;
+}
+
+/*左边的百分数*/
+.graph-container >li:last-child{
+	width: 100%;
+	position: absolute;
+	bottom:0;
+	left: 0;
+	height: 10em;
+	transition: all 0.8s ease-in, bottom 0.8s ease-out;
+}
+.percentage{
+	padding: 0px;
+}
+.percentage li{
+	position: absolute;
+	left: -2.5em;
+	bottom:0;
+	width: 100%;
+	margin-bottom: 2.5em;
+}
+.percentage li:before,.percentage li:after{
+	content: "";
+    position: absolute;
+    border-style: none none dotted;
+    border-color: rgba(100, 100, 100, .15);
+    border-width: 0 0 .15em;
+    background: rgba(133, 133, 133, .15);
+}
+.percentage li:before{
+	width: 100%;
+	bottom: 0;
+	left: 2.5em;
+}
+.percentage li:after{
+	width: 3.55em;
+    height: 0;
+    bottom: -1.22em;
+    left: -.55em;
+    transform: rotate(-45deg);
+    z-index: 2;
+}
+.percentage span{
+	position: absolute;
+	left: -3.5em;
+	top: 1.2em;
+	font-weight: bold;
+    text-shadow: 1px 1px 1px rgba(255,255,255,0.7);
+    font-size: 1.2em;
+}
+
+
+/*trigger*/
+/*size*/
+input#small:checked ~ .graph-container .bar-container,
+input#small:checked ~ .graph-container:after,
+input#small:checked ~ .graph-container > li:last-child{	height: 10em;}
+input#normal:checked ~ .graph-container .bar-container,
+input#normal:checked ~ .graph-container:after,
+input#normal:checked ~ .graph-container > li:last-child{	height: 30em;}
+input#large:checked ~ .graph-container .bar-container,
+input#large:checked ~ .graph-container:after,
+input#large:checked ~ .graph-container > li:last-child{	height: 50em;}
+
+/*color*/
+input#blue:checked ~ .graph-container .bar-container .bar-inner,
+input#blue:checked ~ .graph-container .bar-container .bar-inner:after{background:rgba(0,0,185,0.4);}
+input#blue:checked ~ .graph-container .bar-container .bar-inner:before{background:rgba(0,0,234,0.55);}
+
+
+input#taobao:checked ~ .graph-container .bar-container .bar-inner,
+input#taobao:checked ~ .graph-container .bar-container .bar-inner:after{background:rgba(255,130,0,0.4);}
+input#taobao:checked ~ .graph-container .bar-container .bar-inner:before{background:rgba(255,150,0,0.55);}
+
+
+input#rainbow:checked ~ .graph-container  li:nth-child(1)  .bar-inner,
+input#rainbow:checked ~ .graph-container  li:nth-child(1)  .bar-inner:after{background:rgba(255,0,0,0.3);}
+input#rainbow:checked ~ .graph-container  li:nth-child(1)  .bar-inner:before{background:rgba(255,0,0,0.4);}
+
+input#rainbow:checked ~ .graph-container  li:nth-child(2)  .bar-inner,
+input#rainbow:checked ~ .graph-container  li:nth-child(2)  .bar-inner:after{background:rgba(0,255,0,0.3);}
+input#rainbow:checked ~ .graph-container  li:nth-child(2)  .bar-inner:before{background:rgba(0,255,0,0.4);}
+
+input#rainbow:checked ~ .graph-container  li:nth-child(3)  .bar-inner,
+input#rainbow:checked ~ .graph-container  li:nth-child(3)  .bar-inner:after{background:rgba(0,0,255,0.3);}
+input#rainbow:checked ~ .graph-container  li:nth-child(3)  .bar-inner:before{background:rgba(0,0,255,0.4);}
+
+input#rainbow:checked ~ .graph-container  li:nth-child(4)  .bar-inner,
+input#rainbow:checked ~ .graph-container  li:nth-child(4)  .bar-inner:after{background:rgba(255,100,100,0.3);}
+input#rainbow:checked ~ .graph-container  li:nth-child(4)  .bar-inner:before{background:rgba(255,100,100,0.4);}
+
+input#rainbow:checked ~ .graph-container  li:nth-child(5)  .bar-inner,
+input#rainbow:checked ~ .graph-container  li:nth-child(5)  .bar-inner:after{background:rgba(50,100,150,0.3);}
+input#rainbow:checked ~ .graph-container  li:nth-child(5)  .bar-inner:before{background:rgba(50,100,150,0.4);}
+
+
+/*type*/
+/*bottom变成-2.5是为了让方块完全沉下去，而不会露出顶面 */
+input#none:checked ~ .graph-container li .bar-inner{height: 0% ; bottom : -2.5em;}
+
+/*type1*/
+input#f-product-1:checked ~ .graph-container li:nth-child(1) .bar-inner{height: 10%}
+input#f-product-1:checked ~ .graph-container li:nth-child(2) .bar-inner{height: 30%}
+input#f-product-1:checked ~ .graph-container li:nth-child(3) .bar-inner{height: 70%}
+input#f-product-1:checked ~ .graph-container li:nth-child(4) .bar-inner{height: 40%}
+input#f-product-1:checked ~ .graph-container li:nth-child(5) .bar-inner{height: 100%}
+
+/*type2*/
+input#f-product-2:checked ~ .graph-container li:nth-child(1) .bar-inner{height: 50%}
+input#f-product-2:checked ~ .graph-container li:nth-child(2) .bar-inner{height: 20%}
+input#f-product-2:checked ~ .graph-container li:nth-child(3) .bar-inner{height: 60%}
+input#f-product-2:checked ~ .graph-container li:nth-child(4) .bar-inner{height: 70%}
+input#f-product-2:checked ~ .graph-container li:nth-child(5) .bar-inner{height: 40%}
+
+/*type3*/
+input#f-product-3:checked ~ .graph-container li:nth-child(1) .bar-inner{height: 30%}
+input#f-product-3:checked ~ .graph-container li:nth-child(2) .bar-inner{height: 90%}
+input#f-product-3:checked ~ .graph-container li:nth-child(3) .bar-inner{height: 100%}
+input#f-product-3:checked ~ .graph-container li:nth-child(4) .bar-inner{height: 50%}
+input#f-product-3:checked ~ .graph-container li:nth-child(5) .bar-inner{height: 70%}
